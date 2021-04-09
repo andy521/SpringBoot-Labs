@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService implements ApplicationEventPublisherAware {
@@ -18,7 +19,7 @@ public class UserService implements ApplicationEventPublisherAware {
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
-
+    @Transactional(rollbackFor = Exception.class)
     public void register(String username) {
         // ... 执行注册逻辑
         logger.info("[register][执行用户({}) 的注册逻辑]", username);
